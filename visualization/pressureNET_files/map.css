@@ -1,0 +1,38 @@
+/* Date range inputs */
+
+.clearfix {
+    clear: both;
+}
+
+#map_canvas {
+    height: 100%;
+    width: 100%;
+}
+
+#control_panel_container {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+}
+
+#control_panel {
+    width: 600px;
+    margin: 0 auto;
+    background: #ffffff;
+    opacity: 0.6;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#control_panel_title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#control_panel_info {
+    float: left;
+}
+
+#control_panel_controls {
+}
