@@ -68,7 +68,14 @@ I've prepared some rudimentary data visualizations as a starting point for explo
 There's many interesting and hidden trends in the data sets which I think would be interesting to explore, so I'm hoping
 that the workshop participants will find interesting ways to visualize or interact with the data.
  
-# Heatmap
+
+# Examples
+
+- http://jaredkerim-mozilla.github.io/mozfest-pressurenet/visualization/heatmap/index.html
+- http://jaredkerim-mozilla.github.io/mozfest-pressurenet/visualization/conditions/index.html
+- http://jaredkerim-mozilla.github.io/mozfest-pressurenet/visualization/flot/index.html
+
+## Heatmap
 I built a prototype of a heatmap using Google Maps.  My goal was to see the distribution of pressure spatially.  However,
 there's some notable shortcomings with this implementation.  
 
@@ -82,16 +89,16 @@ Animated heatmap?
 Incorporate conditions into spatial or time series visualizations
 
 #Data processing/cleaning
-Isolate moving/stationary devices
-Aggregate values in a region into a consistent stream
-Isolate and remove outliers
-Interpolate data gaps
-Prediction:
-predict a condition label given some raw data for a region/period
-predict the future output of a sensor given a historical trend
-Correlate with interesting third party data sources:
-External weather services to assist data cleaning?
-Correlate condition labels with outdoor photos from a photo api?
-Correlate weather trends with financial trends?
+- Isolate moving/stationary devices
+- Aggregate values in a region into a consistent stream
+- Isolate and remove outliers
+- Interpolate data gaps
+- Prediction:
+- predict a condition label given some raw data for a region/period
+- predict the future output of a sensor given a historical trend
+- Correlate with interesting third party data sources:
+- External weather services to assist data cleaning?
+- Correlate condition labels with outdoor photos from a photo api?
+- Correlate weather trends with financial trends?
 
 
