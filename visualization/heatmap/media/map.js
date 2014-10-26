@@ -1,56 +1,38 @@
 (function () {
+  // Adding 500 Data Points
+  var map, heatmap;
+
+  var heatmap_data = [];
+
+  for (var reading_i in READINGS_DATA) {
+      var reading = READINGS_DATA[reading_i];
+      var weighted_location = {
+          location: new google.maps.LatLng(reading.latitude, reading.longitude),
+          weight: reading.reading
+      };
+      heatmap_data.push(weighted_location);
+  }
+
   function initialize() {
     var mapOptions = {
-      zoom: 13,
-      center: new google.maps.LatLng(37.774546, -122.433523),
-      mapTypeId: google.maps.MapTypeId.SATELLITE
+      zoom: 10,
+      center: new google.maps.LatLng(51.5072, 0.1275)
     };
 
     map = new google.maps.Map(document.getElementById('map-canvas'),
         mapOptions);
 
-    $.getJSON('https://raw.githubusercontent.com/JaredKerim-Mozilla/mozfest-pressurenet/master/data/readings.0.json', function (data) {
-      var pointArray = new google.maps.MVCArray(taxiData);
+    var pointArray = new google.maps.MVCArray(heatmap_data);
 
-      heatmap = new google.maps.visualization.HeatmapLayer({
-        data: pointArray
-      });
+    heatmap = new google.maps.visualization.HeatmapLayer({
+      data: heatmap_data 
+    });
 
-      heatmap.setMap(map);
-    })
-  }
-
-  function toggleHeatmap() {
-    heatmap.setMap(heatmap.getMap() ? null : map);
-  }
-
-  function changeGradient() {
-    var gradient = [
-      'rgba(0, 255, 255, 0)',
-      'rgba(0, 255, 255, 1)',
-      'rgba(0, 191, 255, 1)',
-      'rgba(0, 127, 255, 1)',
-      'rgba(0, 63, 255, 1)',
-      'rgba(0, 0, 255, 1)',
-      'rgba(0, 0, 223, 1)',
-      'rgba(0, 0, 191, 1)',
-      'rgba(0, 0, 159, 1)',
-      'rgba(0, 0, 127, 1)',
-      'rgba(63, 0, 91, 1)',
-      'rgba(127, 0, 63, 1)',
-      'rgba(191, 0, 31, 1)',
-      'rgba(255, 0, 0, 1)'
-    ]
-    heatmap.set('gradient', heatmap.get('gradient') ? null : gradient);
-  }
-
-  function changeRadius() {
-    heatmap.set('radius', heatmap.get('radius') ? null : 20);
-  }
-
-  function changeOpacity() {
-    heatmap.set('opacity', heatmap.get('opacity') ? null : 0.2);
+    heatmap.setMap(map);
+    heatmap.set('radius', 20); 
+    heatmap.set('opacity', 1.0); 
   }
 
   google.maps.event.addDomListener(window, 'load', initialize);
+
 })();
