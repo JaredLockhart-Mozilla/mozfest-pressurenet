@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <title>Basic Example, Local Timeline Library</title>
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+
+    <script type="text/javascript" src="data/conditions.js"></script>
+    <script type="text/javascript" src="lib/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="lib/mxn/mxn.js?(googlev3)"></script>
+    <script src="lib/timeline-2.3.0.js" type="text/javascript"></script>
+    <script src="src/timemap.js" type="text/javascript"></script>
+
+  <script type="text/javascript">
+
+var tm;
+$(function() {
+
+    var icons = {
+      'Clear': {image: 'media/sun.png', color: 'FFCC00'},
+      'Cloudy': {image: 'media/cloud.png', color: 'CCCCCC'},
+      'Foggy': {image: 'media/cloud.png', color: '666666'},
+      'Precipitation': {image: 'media/rain.png', color: '0099FF'},
+      'Severe': {image: 'media/severe.png', color: 'FF0000'},
+      'Thunderstorm': {image: 'media/storm.png', color: 'FF9900'},
+    };
+
+    function getCircleURL(size, color, alpha) {
+      return "http://chart.apis.google.com/" +
+          "chart?cht=it&chs=" + size + "x" + size +
+          "&chco=" + color + ",00000001,ffffff01" +
+          "&chf=bg,s,00000000|a,s,000000" + alpha + "&ext=.png";
+    };
+
+    Object.keys(icons).forEach(function(key) {
+      console.log(key);
+      TimeMap.themes[key] = (function() {
+        return new TimeMapTheme({
+          icon: 'http://localhost/~Stuart/timeline/' + icons[key].image,
+          eventIcon: getCircleURL(10, icons[key].color, 'ff'),
+          iconShadow: null,
+          iconShadowSize: [0,0],
+        });
+      })();
+    });
+
+    var data = CONDITIONS_DATA;
+    var items = [];
+    for (var i=0, j=data.length; i<j; i++) {
+        item = {
+          title: data[i].general_condition,
+          start: data[i].daterecorded,
+          point: {
+            lon: data[i].longitude,
+            lat: data[i].latitude,
+          },
+          options: {
+            image: data[i].general_condition
+          }
+        }
+        items.push(item);
+    }
+
+    tm = TimeMap.init({
+        mapId: "map",               // Id of map div element (required)
+        timelineId: "timeline",     // Id of timeline div element (required)
+        datasets: [
+          {
+            type: "basic",
+            options: {
+              items: items,
+            //  items: [
+            //    {
+            //      start : "1401580801053",
+            //      point : {
+            //        lat : 44.8061589,
+            //        lon : -73.0825544,
+            //      },
+            //      options: {
+            //        image: 'cloudy',
+            //      }
+            //    }
+            //  ],
+              transformFunction: function(item) {
+                item.options.theme = TimeMap.themes[item.options.image];
+                return item;
+              }
+            }
+          }
+        ],
+        bandIntervals: [
+            Timeline.DateTime.HOUR,
+            Timeline.DateTime.DAY
+        ]
+    });
+    // manipulate the timemap further here if you like
+});
+    </script>
+    <link href="css/examples.css" type="text/css" rel="stylesheet"/>
+    <style>
+    div#timelinecontainer{ height: 200px; }
+    div#mapcontainer{ height: 450px; }
+    </style>
+  </head>
+
+  <body>
+    <div id="timemap">
+        <div id="timelinecontainer">
+          <div id="timeline"></div>
+        </div>
+        <div id="mapcontainer">
+          <div id="map"></div>
+        </div>
+    </div>
+  </body>
+</html>
+
